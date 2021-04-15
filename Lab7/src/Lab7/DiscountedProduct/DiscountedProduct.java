@@ -49,11 +49,11 @@ public class DiscountedProduct
     }
 
     public DiscountedProduct(double discount, String productName, String productType, String producer) {
-        this.setValues(discount, productName, productType, producer, 0, 0, 0, 0, 0, false);
+        this(discount, productName, productType, producer, 0, 0, 0, 0, 0, false);
     }
 
     public DiscountedProduct(){
-        this.setValues(0, null, null, null, 0, 0, 0, 0, 0, false);
+        this(0, null, null, null);
     }
 
     public void resetValues(double discount, String productName, String productType, String producer,
