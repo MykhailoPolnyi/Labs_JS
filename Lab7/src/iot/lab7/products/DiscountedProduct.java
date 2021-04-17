@@ -1,4 +1,5 @@
-package Lab7.DiscountedProduct;
+package iot.lab7.products;
+
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
@@ -23,44 +24,42 @@ public class DiscountedProduct
     private double customersRate;
 
     protected int maxProductsNum;
-
     protected boolean isWholesaleDiscount;
 
-    public void setValues(double discount, String productName, String productType, String producer,
-                             double startingPrice, double priceWithDiscount, int discountDurationDays,
+    private void setValues(double discount, String productName, String productType, String producer,
+                             double startingPrice, int discountDurationDays,
                              double customersRate, int maxProductsNum, boolean isWholesaleDiscount) {
-        this.discount = discount;
-        this.productName = productName;
-        this.productType = productType;
-        this.producer = producer;
-        this.startingPrice = startingPrice;
-        this.priceWithDiscount = priceWithDiscount;
-        this.discountDurationDays = discountDurationDays;
-        this.customersRate = customersRate;
-        this.maxProductsNum = maxProductsNum;
-        this.isWholesaleDiscount = isWholesaleDiscount;
+        this.setDiscount(discount);
+        this.setProductName(productName);
+        this.setProductType(productType);
+        this.setProducer(producer);
+        this.setStartingPrice(startingPrice);
+        this.setDiscountDurationDays(discountDurationDays);
+        this.setCustomersRate(customersRate);
+        this.setMaxProductsNum(maxProductsNum);
+        this.setWholesaleDiscount(isWholesaleDiscount);
     }
 
     public DiscountedProduct(double discount, String productName, String productType, String producer,
-                             double startingPrice, double priceWithDiscount, int discountDurationDays,
-                             double customersRate, int maxProductsNum, boolean isWholesaleDiscount){
+                             double startingPrice, int discountDurationDays,
+                             double customersRate, int maxProductsNum, boolean isWholesaleDiscount) {
         this.setValues(discount, productName, productType, producer,
-        startingPrice, priceWithDiscount, discountDurationDays, customersRate, maxProductsNum, isWholesaleDiscount);
+        startingPrice, discountDurationDays, customersRate, maxProductsNum, isWholesaleDiscount);
     }
 
     public DiscountedProduct(double discount, String productName, String productType, String producer) {
-        this(discount, productName, productType, producer, 0, 0, 0, 0, 0, false);
+        this(discount, productName, productType, producer, 0, 0, 0, 0, false);
     }
 
-    public DiscountedProduct(){
+    public DiscountedProduct() {
         this(0, null, null, null);
     }
 
-    public void resetValues(double discount, String productName, String productType, String producer,
-                          double startingPrice, double priceWithDiscount, int discountDurationDays,
-                          double customersRate, int maxProductsNum, boolean isWholesaleDiscount) {
+        public void resetValues(double discount, String productName, String productType, String producer,
+                            double startingPrice, int discountDurationDays,
+                            double customersRate, int maxProductsNum, boolean isWholesaleDiscount) {
         this.setValues(discount, productName, productType, producer,
-                startingPrice, priceWithDiscount, discountDurationDays,
+                startingPrice, discountDurationDays,
                 customersRate, maxProductsNum, isWholesaleDiscount);
     }
 
@@ -69,7 +68,7 @@ public class DiscountedProduct
     }
 
     public void printMaxDiscount(){
-        System.out.println(maxDiscount);
+        System.out.println(DiscountedProduct.getMaxDiscount());
     }
 
     public static double getMaxDiscount(){
@@ -89,7 +88,7 @@ public class DiscountedProduct
             throw new ValueException("Discount value cannot be more than maxDiscount: " + maxDiscount);
         } else {
             this.discount = discount;
-            this.priceWithDiscount = this.startingPrice * this.discount / 100;
+            this.priceWithDiscount = this.startingPrice * (1 - this.discount / 100);
         }
     }
 
@@ -99,7 +98,7 @@ public class DiscountedProduct
 
     public void setStartingPrice(double startingPrice) {
         this.startingPrice = startingPrice;
-        this.priceWithDiscount = this.startingPrice * this.discount/100;
+        this.priceWithDiscount = this.startingPrice * (1 - this.discount/100);
     }
 
     public double getPriceWithDiscount() {
@@ -107,10 +106,10 @@ public class DiscountedProduct
     }
 
     public void setPriceWithDiscount(double priceWithDiscount)
-            throws ValueException{
+            throws Exception{
         double new_discount = priceWithDiscount/this.startingPrice * 100;
         if (new_discount>maxDiscount){
-            throw new ValueException("Discount value cannot be more than maxDiscount: " + maxDiscount);
+            throw new Exception("Discount value cannot be more than maxDiscount: " + maxDiscount);
         }
         this.priceWithDiscount = priceWithDiscount;
         this.discount = new_discount;
@@ -175,16 +174,16 @@ public class DiscountedProduct
     @Override
     public String toString() {
         return "DiscountedProduct{" +
-                "discount=" + discount +
-                ", productName='" + productName + '\'' +
-                ", productType='" + productType + '\'' +
-                ", producer='" + producer + '\'' +
-                ", startingPrice=" + startingPrice +
-                ", priceWithDiscount=" + priceWithDiscount +
-                ", discountDurationDays=" + discountDurationDays +
-                ", customersRate=" + customersRate +
-                ", maxProductsNum=" + maxProductsNum +
-                ", isWholesaleDiscount=" + isWholesaleDiscount +
+                "getDiscount()=" + getDiscount() +
+                ", getProductName()='" + getProductName() + '\'' +
+                ", getProductType()='" + getProductType() + '\'' +
+                ", getProducer()='" + getProducer() + '\'' +
+                ", getStartingPrice()=" + getStartingPrice() +
+                ", getPriceWithDiscount()=" + getPriceWithDiscount() +
+                ", getDiscountDurationDays()=" + getDiscountDurationDays() +
+                ", getCustomersRate()=" + getCustomersRate() +
+                ", getMaxProductsNum()=" + getMaxProductsNum() +
+                ", isWholesaleDiscount()=" + isWholesaleDiscount() +
                 '}';
     }
 }
